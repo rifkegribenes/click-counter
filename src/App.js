@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -7,18 +6,31 @@ class App extends Component {
     super(props);
 
     this.state = {
-      counter: 0
+      counter: 0,
+      error: false
     }
 
   }
   render() {
     return (
       <div data-test="component-app">
-        <h1 data-test="counter-display">The counter is currently {this.state.counter}</h1>
+        <h1 data-test="counter-display">The counter is currently {this.state.error ? "Error" : this.state.counter}</h1>
         <button
           data-test="increment-button"
-          onClick={() => this.setState({ counter: this.state.counter + 1})}
-          >Increment counter</button>
+          onClick={() => this.setState({ counter: this.state.counter + 1, error: false })}
+          >Increment counter
+        </button>
+        <button
+          data-test="decrement-button"
+          onClick={() => {
+            if (this.state.counter !== 0) {
+              this.setState({ counter: this.state.counter - 1, error: false })
+            } else {
+              this.setState({ error: true });
+            }
+          }}
+          >Decrement counter
+        </button>
       </div>
     );
   }
